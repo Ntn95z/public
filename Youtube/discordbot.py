@@ -3,8 +3,7 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 import requests
-from config import token, apikey
-
+from config import token, api
 # Bot Configuration
 intents = discord.Intents.default() 
 intents.message_content = True
@@ -17,19 +16,19 @@ async def on_ready():
     print('Bot is running and has synced.')
 
 # Establish Command Name and Description 
-@bot.tree.command(name='***Enter a name***', description='***Enter a description***')
+@bot.tree.command(name='Lookbot ip', description='Lookup bot for ip')
 
 # Bot Prompt, API Call, and Response Functionality
-@app_commands.describe(user_input = "***Ener a Prompt for the user***: ")                 # Prompt User for Input
-async def bot_name(interaction: discord.Interaction, user_input: str):                 
+@app_commands.describe(user_input = "Please enter a IP adress ")                 # Prompt User for Input
+async def ip_lookup(interaction: discord.Interaction, user_input: str):                 
 
     # Use Requests to Obtain Data from API
-    url = f'***Enter an API Endpoint***{apikey}***Input Variable***{user_input}'
+    url = f'https://api.ipgeolocation.io/v3/ipgeo?apiKey=API_KEY&ip=91.128.103.196'{apikey}***Input Variable***{user_input}'
     response = requests.get(url)
     json_response = response.json()
 
     # Send Message Containing Requested Data to User
-    await interaction.response.send_message(f'***Enter a message to send to user***', ephemeral=True)
+    await interaction.response.send_message(f'IP:{json_reponse("ip")}/nCountry:{json_reponse("country name")}/nISP:{json_reponse("isp")}True)
     return
 
 bot.run(token) # Run Bot
