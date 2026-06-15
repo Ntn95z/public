@@ -17,19 +17,23 @@ async def on_ready():
     print('Bot is running and has synced.')
 
 # Establish Command Name and Description 
-@bot.tree.command(name='***Enter a name***', description='***Enter a description***')
+@bot.tree.command(name='𝐋𝐎𝐎𝐊 𝐁𝐎𝐓 𝐎𝐒𝐈𝐍𝐓', description='🔎🤖 Bot OSINT Discord simple et rapide
+Il aide à rechercher et analyser des infos publiques sur des personnes, pseudos et sites web 🌐📊
+⚡ Ultra pratique, léger et facile à utiliser
+🛡️ Respecte les bonnes pratiques et les sources ouvertes'
+
 
 # Bot Prompt, API Call, and Response Functionality
-@app_commands.describe(user_input = "***Ener a Prompt for the user***: ")                 # Prompt User for Input
-async def bot_name(interaction: discord.Interaction, user_input: str):                 
+@app_commands.describe(user_input) = "entrer une aresse ip"
+async def 𝐋𝐎𝐎𝐊 𝐁𝐎𝐓 𝐎𝐒𝐈𝐍𝐓 (interaction: discord.Interaction, user_input: str):                 
 
     # Use Requests to Obtain Data from API
-    url = f'***Enter an API Endpoint***{apikey}***Input Variable***{user_input}'
+    url = f'https://api.ipgeolocation.io/ipgeo?apiKey={apikey}**Input Variable***{user_input}'
     response = requests.get(url)
     json_response = response.json()
 
     # Send Message Containing Requested Data to User
-    await interaction.response.send_message(f'***Enter a message to send to user***', ephemeral=True)
+    await interaction.response.send_message(f'IP :{ json_reponse = (ip)}' /nContry {json_reponse('contry name')} /nISP: {json_reponse('ISP')}, ephemeral=True)
     return
 
 bot.run(token) # Run Bot
