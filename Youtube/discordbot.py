@@ -1,35 +1,37 @@
-# Imports
 import discord
 from discord import app_commands
 from discord.ext import commands
 import requests
 from config import token, apikey
 
-# Bot Configuration
-intents = discord.Intents.default() 
+intents = discord.Intents.default()
 intents.message_content = True
-bot = commands.Bot(intents=intents, command_prefix='/')
 
-#Sync
+bot = commands.Bot(command_prefix="/", intents=intents)
+
 @bot.event
 async def on_ready():
     await bot.tree.sync()
-    print('Bot is running and has synced.')
+    print("Bot connecté et prêt")
 
-# Establish Command Name and Description 
-@bot.tree.command(name='***Enter a name***', description='***Enter a description***')
+@bot.tree.command(
+    name="LOOK BOT OSINT",
+    description="Bot OSINT simple pour analyser une IP"
+)
+@app_commands.describe(
+    user_input="Entrez une adresse IP"
+)
+async def lookup(interaction: discord.Interaction, user_input: str):
 
-# Bot Prompt, API Call, and Response Functionality
-@app_commands.describe(user_input = "***Ener a Prompt for the user***: ")                 # Prompt User for Input
-async def bot_name(interaction: discord.Interaction, user_input: str):                 
-
-    # Use Requests to Obtain Data from API
-    url = f'***Enter an API Endpoint***{apikey}***Input Variable***{user_input}'
+    url = f"https://api.ipgeolocation.io/ipgeo?apiKey={apikey}&ip={user_input}"
     response = requests.get(url)
-    json_response = response.json()
+    data = response.json()
 
-    # Send Message Containing Requested Data to User
-    await interaction.response.send_message(f'***Enter a message to send to user***', ephemeral=True)
-    return
+    await interaction.response.send_message(
+        f"🌍 IP : {data.get('ip')}\n"
+        f"📍 Pays : {data.get('country_name')}\n"
+        f"🏢 ISP : {data.get('isp')}",
+        ephemeral=True
+    )
 
-bot.run(token) # Run Bot
+bot.run(token)
